@@ -1,59 +1,62 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination } from 'swiper/modules'
+import { Autoplay, Pagination, EffectFade } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/effect-fade'
+
+// Import user images and video
+import img1 from '../assets/moment1.jpg'
+import img2 from '../assets/moment2.jpg'
+import vid1 from '../assets/moment3.mp4'
 
 const moments = [
   {
-    src: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&h=400&fit=crop',
-    caption: 'Our first adventure together 🌅',
+    type: 'image',
+    src: img1,
+    caption: 'One of my favorite shots of you! 😍✨',
   },
   {
-    src: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=600&h=400&fit=crop',
-    caption: 'That magical evening ✨',
+    type: 'image',
+    src: img2,
+    caption: 'Looking absolutely stunning... as always. 💖',
   },
   {
-    src: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&h=400&fit=crop',
-    caption: 'When we laughed till we cried 😂',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop',
-    caption: 'Our favorite place 🏖️',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=600&h=400&fit=crop',
-    caption: 'The moment I knew 💕',
+    type: 'video',
+    src: vid1,
+    caption: 'Every second with you is a dream. 🎥💕',
   },
 ]
 
 function MemoryCarousel() {
   return (
     <div className="carousel-wrapper glass">
-      <h2>Our Top 5 Moments</h2>
+      <h2>Your Top Moments</h2>
       <Swiper
-        modules={[Autoplay, Pagination]}
+        modules={[Autoplay, Pagination, EffectFade]}
+        effect="fade"
         spaceBetween={16}
         slidesPerView={1}
         loop
-        autoplay={{ delay: 3500, disableOnInteraction: false }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          900: { slidesPerView: 2, spaceBetween: 20 },
-          1200: { slidesPerView: 3, spaceBetween: 24 },
-        }}
-        style={{ paddingBottom: '40px' }}
+        style={{ paddingBottom: '30px' }}
       >
         {moments.map((m, i) => (
           <SwiperSlide key={i}>
-            <div style={{ textAlign: 'center' }}>
-              <img src={m.src} alt={m.caption} loading="lazy" />
-              <p style={{
-                marginTop: '10px',
-                fontSize: '0.9rem',
-                color: 'rgba(255,255,255,0.85)',
-                fontStyle: 'italic',
-              }}>
+            <div className="carousel-slide-content">
+              {m.type === 'video' ? (
+                <video
+                  src={m.src}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="carousel-video"
+                />
+              ) : (
+                <img src={m.src} alt={m.caption} loading="lazy" />
+              )}
+              <p className="carousel-caption">
                 {m.caption}
               </p>
             </div>

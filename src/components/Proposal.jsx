@@ -106,25 +106,30 @@ function Proposal({ onAccept }) {
     setHoverCount((c) => c + 1)
     spawnEmojiBurst()
 
-    // Screen shake!
+    // Screen shake! Stronger on mobile
     setShakeScreen(true)
-    setTimeout(() => setShakeScreen(false), 400)
+    setTimeout(() => setShakeScreen(false), 300)
 
     // Vanish + teleport
     setNoVisible(false)
-    setTimeout(() => setNoVisible(true), 350)
-
-    // Keep button fully inside the visible viewport
-    const btnW = 160
-    const btnH = 50
-    const margin = 20
-    const minX = margin + btnW / 2
-    const maxX = window.innerWidth - margin - btnW / 2
-    const minY = margin + btnH / 2
-    const maxY = window.innerHeight - margin - btnH / 2
-    const newX = Math.max(minX, Math.min(maxX, Math.random() * window.innerWidth))
-    const newY = Math.max(minY, Math.min(maxY, Math.random() * window.innerHeight))
-    setNoPos({ x: newX, y: newY })
+    
+    // Slight delay before reappearing elsewhere
+    setTimeout(() => {
+      // Keep button fully inside the visible viewport with safer margins
+      const btnW = window.innerWidth < 480 ? 120 : 160
+      const btnH = 50
+      const margin = 30 // More margin for mobile system gestures
+      const minX = margin + btnW / 2
+      const maxX = window.innerWidth - margin - btnW / 2
+      const minY = margin + btnH / 2
+      const maxY = window.innerHeight - margin - btnH / 2
+      
+      const newX = Math.max(minX, Math.min(maxX, Math.random() * window.innerWidth))
+      const newY = Math.max(minY, Math.min(maxY, Math.random() * window.innerHeight))
+      
+      setNoPos({ x: newX, y: newY })
+      setNoVisible(true)
+    }, 250)
   }, [spawnEmojiBurst])
 
   return (
@@ -250,7 +255,10 @@ function Proposal({ onAccept }) {
                     key={hoverCount}
                     className="btn btn-no"
                     onMouseEnter={moveNoButton}
-                    onTouchStart={(e) => { e.preventDefault(); moveNoButton(); }}
+                    onTouchStart={(e) => {
+                      e.preventDefault()
+                      moveNoButton()
+                    }}
                     initial={{ opacity: 0, scale: 0, rotate: -90 }}
                     animate={{ opacity: 1, scale: noScale, rotate: 0 }}
                     exit={{ opacity: 0, scale: 0, rotate: 180 }}
