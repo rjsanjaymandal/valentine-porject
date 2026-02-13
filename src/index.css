@@ -217,8 +217,15 @@ body {
   gap: clamp(8px, 2vh, 16px);
   width: 100%;
   max-width: clamp(300px, 90vw, 440px);
+  max-height: calc(100% - 40px);
+  overflow-y: auto;
+  scrollbar-width: none;
   /* Top alignment on very short screens, centered otherwise */
   margin: env(safe-area-inset-top, 20px) auto;
+}
+
+.proposal-section::-webkit-scrollbar {
+  display: none;
 }
 
 @media (min-height: 500px) {
@@ -245,13 +252,15 @@ body {
   font-weight: 400;
   line-height: 1.3;
   margin-bottom: 4px;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .proposal-card .subtitle {
   font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   color: var(--text-secondary);
   margin-bottom: 16px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .proposal-gif {
@@ -266,9 +275,10 @@ body {
 
 .hover-hint {
   font-size: clamp(0.7rem, 2vw, 0.8rem);
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.8);
   margin-top: 6px;
   font-style: italic;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   animation: fadeInOut 2.5s ease-in-out infinite;
 }
 
@@ -280,19 +290,18 @@ body {
 /* Persuasion reason ticker */
 .reason-ticker {
   font-size: clamp(0.72rem, 2.2vw, 0.85rem);
-  color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50px;
-  padding: 6px 16px;
-  margin: 8px auto 4px;
-  max-width: 90%;
+  padding: 8px 18px;
+  margin: 12px auto 6px;
+  width: fit-content;
+  max-width: 95%;
   text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* No button tombstone */
@@ -357,13 +366,14 @@ body {
 }
 
 .btn-no {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   color: white;
   padding: clamp(10px, 3vw, 14px) clamp(24px, 8vw, 40px);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   transition: transform 0.2s ease, background 0.25s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .btn-no:active {
@@ -423,7 +433,8 @@ body {
   font-size: clamp(1.8rem, 7vw, 3.4rem);
   font-weight: 400;
   margin-bottom: 8px;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .celebration-card p {
@@ -431,6 +442,7 @@ body {
   color: var(--text-secondary);
   line-height: 1.65;
   margin-bottom: 14px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .celebration-card .celebration-gif {

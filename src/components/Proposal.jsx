@@ -115,10 +115,12 @@ function Proposal({ onAccept }) {
     
     // Slight delay before reappearing elsewhere
     setTimeout(() => {
-      // Keep button fully inside the visible viewport with safer margins
-      const btnW = window.innerWidth < 480 ? 120 : 160
-      const btnH = 50
-      const margin = 30 // More margin for mobile system gestures
+      // Scale safety margins based on message length
+      const textLen = noText.length
+      const btnW = Math.max(140, textLen * 10 + 40) // Dynamic width estimate
+      const btnH = 60
+      const margin = 30
+      
       const minX = margin + btnW / 2
       const maxX = window.innerWidth - margin - btnW / 2
       const minY = margin + btnH / 2
@@ -130,7 +132,7 @@ function Proposal({ onAccept }) {
       setNoPos({ x: newX, y: newY })
       setNoVisible(true)
     }, 250)
-  }, [spawnEmojiBurst])
+  }, [spawnEmojiBurst, noText])
 
   return (
     <>
@@ -247,36 +249,8 @@ function Proposal({ onAccept }) {
               {yesText}
             </motion.button>
 
-            {/* No Button — or its ghost */}
-            {!noButtonGone ? (
-              <AnimatePresence mode="wait">
-                {noVisible && (
-                  <motion.button
-                    key={hoverCount}
-                    className="btn btn-no"
-                    onMouseEnter={moveNoButton}
-                    onTouchStart={(e) => {
-                      e.preventDefault()
-                      moveNoButton()
-                    }}
-                    initial={{ opacity: 0, scale: 0, rotate: -90 }}
-                    animate={{ opacity: 1, scale: noScale, rotate: 0 }}
-                    exit={{ opacity: 0, scale: 0, rotate: 180 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 18 }}
-                    style={{
-                      position: noPos ? 'fixed' : 'relative',
-                      left: noPos ? `${noPos.x}px` : undefined,
-                      top: noPos ? `${noPos.y}px` : undefined,
-                      transform: noPos ? 'translate(-50%, -50%)' : undefined,
-                      zIndex: 50,
-                    }}
-                  >
-                    {noText}
-                  </motion.button>
-                )}
-              </AnimatePresence>
-            ) : (
-              /* No button is gone — show funny tombstone */
+            {/* No Button Ghost / Tombstone space */}
+            {noButtonGone && (
               <motion.span
                 className="no-tombstone"
                 initial={{ opacity: 0, scale: 0 }}
@@ -285,6 +259,9 @@ function Proposal({ onAccept }) {
               >
                 🪦 RIP "No" Button
               </motion.span>
+            )}
+            {!noButtonGone && !noPos && (
+              <div style={{ width: 140, height: 50 }} /> /* Placeholder for initial state */
             )}
           </div>
 
@@ -318,6 +295,38 @@ function Proposal({ onAccept }) {
           )}
         </div>
       </motion.div>
+
+      {/* Viewport-level No Button to bypass parent transform issues */}
+      {!noButtonGone && (
+        <AnimatePresence>
+          {noVisible && (
+            <motion.button
+              key={hoverCount}
+              className="btn btn-no"
+              onMouseEnter={moveNoButton}
+              onTouchStart={(e) => {
+                e.preventDefault()
+                moveNoButton()
+              }}
+              initial={{ opacity: 0, scale: 0, rotate: -30 }}
+              animate={{ opacity: 1, scale: noScale, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 25 }}
+              style={{
+                position: 'fixed',
+                left: noPos ? `${noPos.x}px` : '50%',
+                top: noPos ? `${noPos.y}px` : '60%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 1000,
+                // Ensure initial position doesn't block the Yes button
+                marginLeft: noPos ? 0 : '80px',
+              }}
+            >
+              {noText}
+            </motion.button>
+          )}
+        </AnimatePresence>
+      )}
     </>
   )
 }
