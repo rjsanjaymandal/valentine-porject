@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import FloatingHearts from './components/FloatingHearts'
+import Sparkles from './components/Sparkles'
 import MusicToggle from './components/MusicToggle'
 import Proposal from './components/Proposal'
 import Celebration from './components/Celebration'
@@ -11,6 +12,7 @@ function App() {
   return (
     <div className="app">
       <FloatingHearts />
+      <Sparkles />
       <MusicToggle />
       <AnimatePresence mode="wait">
         {!accepted ? (
