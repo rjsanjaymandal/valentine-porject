@@ -18,7 +18,7 @@ const NO_MESSAGES = [
 
 /* ——— Yes button text gets more enticing ——— */
 const YES_MESSAGES = [
-  "Yes! �",
+  "Yes! 💖",
   "Yes! 💖",
   "Yessss! 🥰",
   "Say YES! 😍",
@@ -37,12 +37,12 @@ const REASONS = [
   "I'll let you pick the movie 🎬",
   "Free hugs for life 🤗",
   "I'll never steal the blanket 🛏️",
-  "Unlimited piggyback rides �",
+  "Unlimited piggyback rides 🐷",
   "I'll pretend to like your playlists 🎵",
   "I come with free WiFi 📶",
   "I'll always save you the last slice 🍕",
   "My dog already loves you 🐕",
-  "I'll laugh at all your jokes, even bad ones �",
+  "I'll laugh at all your jokes, even bad ones 😂",
 ]
 
 const BURST_EMOJIS = ['💕', '💗', '✨', '💖', '🩷', '💘', '😍', '🥰', '🌹', '💐']
@@ -305,7 +305,7 @@ function Proposal({ onAccept }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              Resistance is futile 🤖�
+              Resistance is futile 🤖💕
             </motion.p>
           )}
         </div>
